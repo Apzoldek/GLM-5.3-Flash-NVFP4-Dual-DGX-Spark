@@ -1,4 +1,11 @@
-# GLM-5.3-Flash-NVFP4-Dual-DGX-Spark
+<h1 align="center">GLM-5.3-Flash-NVFP4-Dual-DGX-Spark</h1>
+
+<p align="center">
+  <sub>by <a href="https://x.com/MiaAI_lab">Mia'a AI Lab</a></sub>
+  <br><br>
+  <a href="https://github.com/sponsors/MiaAI-Lab" target="_blank" rel="noopener noreferrer" style="display:inline-block;margin:0 8px;vertical-align:middle;"><img src="https://img.shields.io/badge/Sponsor%20me%20on%20GitHub-181717?style=for-the-badge&logo=githubsponsors&logoColor=white" alt="Sponsor me on GitHub" height="28" style="height:28px;width:auto;vertical-align:middle;border:0;" /></a>
+  <a href="https://x.com/MiaAI_lab" target="_blank" rel="noopener noreferrer" style="display:inline-block;margin:0 8px;vertical-align:middle;"><img src="https://img.shields.io/badge/Follow%20me%20on%20X-000000?style=for-the-badge&logo=x&logoColor=white" alt="Follow Mia on X" height="28" style="height:28px;width:auto;vertical-align:middle;border:0;" /></a>
+</p>
 
 Serve the **[LibertAIDAI/GLM-5.3-Flash-NVFP4](https://huggingface.co/LibertAIDAI/GLM-5.3-Flash-NVFP4)** checkpoint on a **2× DGX Spark** kit: multimodal image+video, Ray tensor-parallel 2, OpenAI API on **:8888**. One command (`./start.sh`) builds the local serving image if needed, syncs weights, stands up the Ray cluster over CX7, and waits for `/health`.
 
