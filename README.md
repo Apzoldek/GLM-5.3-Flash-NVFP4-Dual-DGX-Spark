@@ -2,8 +2,6 @@
 
 Serve the **[LibertAIDAI/GLM-5.3-Flash-NVFP4](https://huggingface.co/LibertAIDAI/GLM-5.3-Flash-NVFP4)** checkpoint on a **2× DGX Spark** kit: multimodal image+video, Ray tensor-parallel 2, OpenAI API on **:8888**. One command (`./start.sh`) builds the local serving image if needed, syncs weights, stands up the Ray cluster over CX7, and waits for `/health`.
 
-This is **Mia’s** 2× DGX Spark recipe for that checkpoint — not a generic vLLM gist. Portainer already holds **8000** on this kit, so the API is **8888**.
-
 ## Hardware / topology
 
 Two GB10 Sparks (SM121, 128 GiB UMA each), one GPU per node, **TP=2** via Ray.
