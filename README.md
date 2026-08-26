@@ -79,7 +79,13 @@ Image + video use standard OpenAI multimodal content parts (`image_url` / `video
 
 ## Image
 
-Serving tag: **`mia/glm53-flash-spark:mm-ray-v1`**.
+Serving tag: **`mia/glm53-flash-spark:mm-ray-v1`** (local default; `start.sh` does not change this).
+
+A private copy is on GHCR for MiaAI-Lab members:
+
+```bash
+docker pull ghcr.io/miaai-lab/glm53-flash-spark:mm-ray-v1
+```
 
 This is a **local** tag (kernel `glm53-flash-sm121:v8` + Ray + multimodal defaults). **Do not `docker pull` it from Docker Hub** — `start.sh` will not pull `mia/glm53-flash-spark:*`; it builds.
 
