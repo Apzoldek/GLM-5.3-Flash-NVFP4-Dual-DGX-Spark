@@ -1,0 +1,5 @@
+# Unused for current image builds. Both Dockerfile and
+# Dockerfile.mm-ray use context files/ (COPY glm53-flash_SM121.py and
+# COPY chat_template.jinja from that directory). Docker only reads
+# .dockerignore from the context root, so this repo-root file is not
+# applied. Do not ignore glm53-flash_SM121.py inside files/.
