@@ -42,6 +42,20 @@ Both containers run `--network host --ipc=host`. Ray may use the `10.0.0.1`/`10.
 
 Model name on the wire: `LibertAIDAI/GLM-5.3-Flash-NVFP4`.
 
+## Structural decode tok/s
+
+On this recipe (SM90 NoPE + FA2, marlin, MTP-4, fp8_e4m3 KV, 262k, eager). Concurrent streams = `--max-num-seqs` class.
+
+| Concurrency | agg tok/s | tok/s/stream | TTFT |
+|---|---|---|---|
+| ×1 | 23–30 | 23–30 | 6.54s |
+| ×2 | 31–37 | 16–19 | 6.40s |
+| ×4 | 43 | 13 | 8.35s |
+| ×6 | 64 | 11 | 1.03s † |
+| ×8 | 72 | 10 | 6.17s |
+
+† warm
+
 ## Quickstart
 
 ```bash
@@ -114,11 +128,12 @@ All optional. Defaults match a working 2× Spark + CX7 + Portainer-on-8000 kit.
 | `MOE_BACKEND` | `marlin` | `marlin` (default) · `native` · `auto` (native, then marlin on `cudaErrorNoKernelImageForDevice`) |
 | `MTP_TOKENS` | `4` | MTP speculative tokens (`0` disables) |
 | `MAX_MODEL_LEN` | `262144` | Context; model is 1M-native (`1048576` if you need it) |
-| `GPU_MEM_UTIL` | `0.86` | vLLM GPU memory budget (GB10 UMA; **0.90 fails** the free-mem check) |
+| `GPU_MEM_UTIL` | `0.84` | vLLM GPU memory budget (GB10 UMA; **0.90 fails** the free-mem check). Profiles KV when `KV_CACHE_MEMORY` is unset |
 | `ENFORCE_EAGER` | `1` | Skip CUDA-graph capture at init |
 | `BLOCK_SIZE` | `2304` | Paged-MQA block size |
 | `MAX_NUM_SEQS` | `8` | Scheduler concurrency |
 | `KV_CACHE_DTYPE` | `fp8_e4m3` | KV dtype |
+| `KV_CACHE_MEMORY` | *(unset)* | Optional `--kv-cache-memory` pin in bytes. Default is empty so `GPU_MEM_UTIL=0.84` sizes KV; set only if MTP-4 UMA-OOMs |
 | `LIMIT_MM` | `{"image":4,"video":1}` | Max image/video items per prompt |
 | `SKIP_MM_PROFILING` | `1` | Serve MM without a max-size dummy forward at init (avoids UMA OOM) |
 | `HEAD_IP` | `10.0.0.1` | Head as seen by the worker |
@@ -153,7 +168,7 @@ CX7 pins (`HEAD_CX7_IF`, `WORKER_CX7_IF`, `HEAD_CX7_IB`, `WORKER_CX7_IB`) defaul
 
 ## Notes
 
-- **GB10 is UMA.** Weights ~90 GiB per rank; Ray’s default object store would steal RAM from the GPU budget. This recipe uses a 4 GiB Ray object store, `GPU_MEM_UTIL=0.86`, `--enforce-eager`, and `--skip-mm-profiling`. Do not run another GPU model on either node at the same time.
+- **GB10 is UMA.** Weights ~90 GiB per rank; Ray’s default object store would steal RAM from the GPU budget. This recipe uses a 4 GiB Ray object store, `GPU_MEM_UTIL=0.84` (which profiles KV — `--kv-cache-memory` is unset by default), `--enforce-eager`, and `--skip-mm-profiling`. Set `KV_CACHE_MEMORY=<bytes>` only if MTP-4 UMA-OOMs. Do not run another GPU model on either node at the same time.
 - **Tear down both ranks before relaunch.** Leftover Ray/NCCL on either Spark will fight the next start. Use `./start.sh stop` or `./start.sh restart` — not a head-only `docker rm`.
 - **Thinking off:** pass `"chat_template_kwargs": {"enable_thinking": false}` on the chat-completions body.
 - **Local image tag.** `mia/glm53-flash-spark:mm-ray-v1` is built here. Do not `docker pull` that tag from Docker Hub.

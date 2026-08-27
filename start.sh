@@ -40,7 +40,9 @@
 #   MOE_BACKEND=marlin            go straight to the marlin fallback
 #   MOE_BACKEND=native            never fall back to marlin
 #   MAX_MODEL_LEN=1048576         model is 1M-native; default here is 262144
-#   GPU_MEM_UTIL=0.86             vLLM memory budget (GB10 UMA; 0.90 fails free-mem check)
+#   GPU_MEM_UTIL=0.84             vLLM memory budget (GB10 UMA; 0.90 fails free-mem check)
+#                                 profiles KV unless KV_CACHE_MEMORY is set
+#   KV_CACHE_MEMORY=<bytes>       optional --kv-cache-memory pin (UMA OOM only)
 #   MTP_TOKENS=4                  MTP speculative tokens
 #   PORT=8888                     API port on this machine
 #   EXTRA_ARGS='--max-num-seqs 64'   extra flags appended to `vllm serve`
@@ -89,7 +91,11 @@ PORT="${PORT:-8888}"
 
 MTP_TOKENS="${MTP_TOKENS:-4}"
 MAX_MODEL_LEN="${MAX_MODEL_LEN:-262144}"
-GPU_MEM_UTIL="${GPU_MEM_UTIL:-0.86}"
+# 0.86 with the pin unset let TP0 reserve 11.37 GiB KV (TP1 7.53 GiB /
+# 924k tokens). Engine init finished, then RayWorkerProc rank 0 died
+# during API MM warmup (NVRM NV_ERR_NO_MEMORY on the head UMA). 0.84
+# leaves ~2.4 GiB headroom for that extra alloc without re-pinning KV.
+GPU_MEM_UTIL="${GPU_MEM_UTIL:-0.84}"
 # This image prefers FLASHINFER_MLA_SPARSE_SM90 + FA2 on GB10. Our
 # checkpoint is NoPE (pe_dim=0). Stock glm53-flash only lists SM120
 # packed fp8_ds_mla — the unused path, not what we bake.
@@ -106,7 +112,7 @@ MOE_BACKEND="${MOE_BACKEND:-marlin}"      # auto | native | marlin
 BLOCK_SIZE="${BLOCK_SIZE:-2304}"         # DeepGEMM arch-12 fp8 paged-MQA: 64-entry pool pages
 MAX_NUM_SEQS="${MAX_NUM_SEQS:-8}"
 KV_CACHE_DTYPE="${KV_CACHE_DTYPE:-fp8_e4m3}"
-KV_CACHE_MEMORY="${KV_CACHE_MEMORY:-4445787956}"  # pin KV so MTP-4 does not UMA-OOM
+KV_CACHE_MEMORY="${KV_CACHE_MEMORY:-}"  # empty: omit --kv-cache-memory so GPU_MEM_UTIL profiles KV; set bytes if UMA OOM
 TRUST_REMOTE_CODE="${TRUST_REMOTE_CODE:-1}"
 
 READY_TIMEOUT="${READY_TIMEOUT:-3600}"          # = VLLM_ENGINE_READY_TIMEOUT_S
