@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Mia's Spark — build this kit's images from files/ (does not start containers).
+# Spark recipe — build this kit's images from files/ (does not start containers).
 # 1) kernel glm53-flash-sm121:v8 via Dockerfile + glm53-flash_SM121.py sm90
 # 2) serving mia/glm53-flash-spark:mm-ray-v1 via Dockerfile.mm-ray
 #    (Ray + MM + :8888). Context is always this directory so COPY works.

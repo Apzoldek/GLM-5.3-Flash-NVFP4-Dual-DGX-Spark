@@ -1,6 +1,6 @@
 FROM vllm/vllm-openai:glm53-flash-arm64-cu130
 
-# Mia's Spark kernel layer (local tag glm53-flash-sm121:v8).
+# Spark kernel layer (local tag glm53-flash-sm121:v8).
 # This 2× GB10 kit serves MM + Ray on :8888 from the mm-ray tag on top.
 #
 # Stock glm53-flash-arm64-cu130 sends SM12 to FLASHINFER_MLA_SPARSE_SM120

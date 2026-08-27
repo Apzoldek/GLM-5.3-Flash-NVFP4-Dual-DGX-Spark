@@ -1,13 +1,13 @@
 FROM glm53-flash-sm121:v8
 
-# Mia's Spark serving layer — MM + Ray TP2 + OpenAI API on :8888.
+# Spark serving layer — MM + Ray TP2 + OpenAI API on :8888.
 # Kernel work is the sibling Dockerfile (sm90 on GB10).
 # Both Dockerfiles use context files/ so COPY paths stay next to build.sh.
 # start.sh on this kit expects Ray already in the image (inner pip is a no-op).
 
 LABEL org.opencontainers.image.vendor="Mia" \
       org.opencontainers.image.title="Mia Spark GLM-5.3-Flash-NVFP4 (MM + Ray)" \
-      org.opencontainers.image.description="Mia's Spark MM+Ray recipe on GB10: LibertAIDAI/GLM-5.3-Flash-NVFP4 checkpoint, multimodal, Ray TP2, OpenAI API :8888" \
+      org.opencontainers.image.description="Spark MM+Ray recipe on GB10: LibertAIDAI/GLM-5.3-Flash-NVFP4 checkpoint, multimodal, Ray TP2, OpenAI API :8888" \
       org.opencontainers.image.source="https://huggingface.co/LibertAIDAI/GLM-5.3-Flash-NVFP4" \
       org.opencontainers.image.base.name="vllm/vllm-openai:glm53-flash-arm64-cu130" \
       io.mia.spark.runtime="mm-ray-v1"
