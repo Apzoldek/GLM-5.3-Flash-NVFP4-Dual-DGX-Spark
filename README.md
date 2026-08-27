@@ -157,3 +157,7 @@ CX7 pins (`HEAD_CX7_IF`, `WORKER_CX7_IF`, `HEAD_CX7_IB`, `WORKER_CX7_IB`) defaul
 - **Tear down both ranks before relaunch.** Leftover Ray/NCCL on either Spark will fight the next start. Use `./start.sh stop` or `./start.sh restart` — not a head-only `docker rm`.
 - **Thinking off:** pass `"chat_template_kwargs": {"enable_thinking": false}` on the chat-completions body.
 - **Local image tag.** `mia/glm53-flash-spark:mm-ray-v1` is built here. Do not `docker pull` that tag from Docker Hub.
+
+## License
+
+This repository's code is provided under the [MIT License](LICENSE).
